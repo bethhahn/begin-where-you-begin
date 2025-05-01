@@ -88,29 +88,25 @@ export function Timer({ duration, onComplete, className }: TimerProps) {
     <div className={cn("flex items-center gap-3", className)}>
       <button
         onClick={togglePause}
-        className="p-2 rounded-full hover:bg-slate-100"
+        className="p-2 rounded-full hover:bg-[#747895]/10 transition-colors duration-300"
         aria-label={isPaused ? "Resume timer" : "Pause timer"}
       >
-        {isPaused ? <PlayIcon className="h-5 w-5" /> : <PauseIcon className="h-5 w-5" />}
+        {isPaused ? <PlayIcon className="h-5 w-5 text-[#747895]/80" /> : <PauseIcon className="h-5 w-5 text-[#747895]/80" />}
       </button>
 
-      <div className="text-2xl font-mono">
-        {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
-      </div>
-
-      <div className="flex-1 bg-slate-200 h-2 rounded-full overflow-hidden">
+      <div className="flex-1 bg-[#747895]/10 h-2 rounded-full overflow-hidden">
         <div
-          className="bg-slate-700 h-full transition-all duration-1000"
+          className="bg-[#747895]/40 h-full transition-all duration-1000"
           style={{ width: `${(timeLeft / duration) * 100}%` }}
         />
       </div>
 
       <button
         onClick={toggleMute}
-        className="p-2 rounded-full hover:bg-slate-100"
+        className="p-2 rounded-full hover:bg-[#747895]/10 transition-colors duration-300"
         aria-label={isMuted ? "Unmute timer sound" : "Mute timer sound"}
       >
-        {isMuted ? <VolumeXIcon className="h-5 w-5" /> : <Volume2Icon className="h-5 w-5" />}
+        {isMuted ? <VolumeXIcon className="h-5 w-5 text-[#747895]/80" /> : <Volume2Icon className="h-5 w-5 text-[#747895]/80" />}
       </button>
     </div>
   )

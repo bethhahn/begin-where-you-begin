@@ -7,8 +7,8 @@ import { AudioProvider } from "@/components/audio-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Meditation & Free Writing",
-  description: "A meditation and free writing application",
+  title: "Meditation & Free Write",
+  description: "A meditation and free write application",
 }
 
 export default function RootLayout({

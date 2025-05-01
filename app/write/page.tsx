@@ -68,8 +68,9 @@ export default function WritePage() {
     URL.revokeObjectURL(url)
 
     toast({
-      title: "Writing saved",
-      description: "Your free writing has been saved successfully.",
+      title: "Success!",
+      description: "Your free write has been saved successfully.",
+      duration: 3000,
     })
 
     // Navigate to the reflection page
@@ -83,34 +84,34 @@ export default function WritePage() {
   }
 
   return (
-    <div className="container max-w-2xl mx-auto py-12 px-4 bg-white text-[#411f30] min-h-screen">
-      <Card className="p-6 bg-[#ecedf5] rounded-lg border border-[#411f30]">
+    <div className="container max-w-2xl mx-auto py-12 px-4 bg-white text-[#747895] min-h-screen">
+      <Card className="p-6 bg-[#ecedf5] rounded-lg border border-[#747895]/20">
         <div className="space-y-6">
-          <h1 className="text-2xl font-bold text-center text-[#411f30]">Free Writing</h1>
+          <h1 className="text-2xl font-bold text-center text-[#747895]">Free Write</h1>
 
-          <div className="p-4 bg-white rounded-lg text-center border border-[#411f30]">
-            <p className="text-lg italic text-[#411f30]">{sentence}</p>
+          <div className="p-4 bg-white rounded-lg text-center border border-[#747895]/20">
+            <p className="text-lg italic text-[#747895]">{sentence}</p>
           </div>
 
           {!isTimerRunning && !isTimerComplete && (
             <div className="space-y-4 text-center">
-              <p className="text-[#411f30]">
+              <p className="text-[#747895]">
                 Directions: Free write for eight minutes based on the sentence above. Don't worry about grammar,
                 spelling, or structure - just let your thoughts flow.
               </p>
               <Button 
                 onClick={handleStartWriting}
-                className="bg-[#411f30] text-white hover:bg-[#5a2b42] transition-colors duration-300"
+                className="meditation-button"
               >
-                Begin Free Writing
+                Begin Free Write
               </Button>
             </div>
           )}
 
           {isTimerRunning && (
             <div className="space-y-4">
-              <div className="flex justify-center mb-4">
-                <Timer duration={8 * 60} onComplete={handleTimerComplete} />
+              <div className="flex justify-center mb-4 w-full max-w-md mx-auto">
+                <Timer duration={8 * 60} onComplete={handleTimerComplete} className="w-full" />
               </div>
 
               <Textarea
@@ -118,7 +119,7 @@ export default function WritePage() {
                 value={writing}
                 onChange={(e) => setWriting(e.target.value)}
                 placeholder="Start writing your thoughts here..."
-                className="min-h-[300px] p-4 bg-white border-[#411f30] text-[#411f30] focus:border-[#411f30] focus:ring-[#411f30]"
+                className="min-h-[300px] p-4 bg-white border-[#747895]/20 text-[#747895] focus:border-[#747895]/40 focus:ring-[#747895]/30"
                 disabled={isTimerComplete && !writing}
               />
             </div>
@@ -129,14 +130,14 @@ export default function WritePage() {
               <Button 
                 onClick={handleSave} 
                 disabled={!writing.trim()}
-                className="bg-[#411f30] text-white hover:bg-[#5a2b42] transition-colors duration-300"
+                className="meditation-button"
               >
                 Save Your Writing
               </Button>
               <Button 
                 variant="outline" 
                 onClick={handleNewSession}
-                className="border-[#411f30] text-[#411f30] hover:bg-white transition-colors duration-300"
+                className="border-[#747895]/20 text-[#747895] hover:bg-white transition-colors duration-300"
               >
                 Start New Session
               </Button>

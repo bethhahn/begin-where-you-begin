@@ -2,33 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
 @layer base {
   :root {
-    --background: 220 25% 97%;
-    --foreground: 220 25% 20%;
-    --card: 220 25% 100%;
-    --card-foreground: 220 25% 20%;
-    --popover: 220 25% 100%;
-    --popover-foreground: 220 25% 20%;
-    --primary: 220 25% 20%;
-    --primary-foreground: 220 25% 98%;
-    --secondary: 220 25% 95%;
-    --secondary-foreground: 220 25% 20%;
-    --muted: 220 25% 95%;
-    --muted-foreground: 220 25% 45%;
-    --accent: 220 25% 95%;
-    --accent-foreground: 220 25% 20%;
+    --foreground: 116, 120, 149;  /* #747895 */
+    --background: 255, 255, 255;
+    
+    --card: 40 33% 100%;
+    --card-foreground: 330 28% 19%;
+    
+    --popover: 40 33% 100%;
+    --popover-foreground: 330 28% 19%;
+    
+    --primary: 330 28% 19%;
+    --primary-foreground: 40 33% 98%;
+    
+    --secondary: 35 25% 95%;
+    --secondary-foreground: 330 28% 19%;
+    
+    --muted: 35 25% 95%;
+    --muted-foreground: 330 28% 45%;
+    
+    --accent: 35 25% 95%;
+    --accent-foreground: 330 28% 19%;
+    
     --destructive: 0 84% 60%;
-    --destructive-foreground: 220 25% 98%;
-    --border: 220 25% 90%;
-    --input: 220 25% 90%;
-    --ring: 220 25% 20%;
-    --chart-1: 200 50% 60%;
-    --chart-2: 180 40% 50%;
-    --chart-3: 160 30% 40%;
-    --chart-4: 140 20% 30%;
-    --chart-5: 120 10% 20%;
-    --radius: 0.75rem;
+    --destructive-foreground: 40 33% 98%;
+    
+    --border: 35 25% 90%;
+    --input: 35 25% 90%;
+    --ring: 330 28% 19%;
+    
+    --radius: 1rem;
     --sidebar-background: 220 25% 98%;
     --sidebar-foreground: 220 25% 20%;
     --sidebar-primary: 220 25% 20%;
@@ -38,6 +44,16 @@
     --sidebar-border: 220 25% 90%;
     --sidebar-ring: 220 25% 20%;
   }
+
+  body {
+    @apply bg-[#faf6f2] text-[#747895] transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
   .dark {
     --background: 220 25% 10%;
     --foreground: 220 25% 90%;
@@ -78,55 +94,83 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-[#f1eeee] text-[#2c3e50] transition-colors duration-300;
-  }
 }
 
 @layer utilities {
+  .meditation-complete {
+    background: linear-gradient(-45deg, #faf6f2, #e9eaf2, #f2e9ea, #f2f0e9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
   .text-balance {
     text-wrap: balance;
   }
+
+  .meditation-card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-[#747895]/20 p-6 transition-all duration-300 hover:shadow-xl;
+  }
+
+  .meditation-button {
+    @apply bg-[#747895] text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-[#8589a3] hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .meditation-input {
+    @apply bg-white/70 backdrop-blur-sm border border-[#747895]/20 rounded-xl p-4 focus:ring-2 focus:ring-[#747895]/30 focus:border-[#747895]/40 transition-all duration-300;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .float-subtle {
+    animation: float 6s ease-in-out infinite;
+  }
 }
 
-/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes float {
-  0% {
-    transform: translateY(0px);
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
     transform: translateY(-10px);
   }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes pulse-soft {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-soft {
-  animation: pulse-soft 4s ease-in-out infinite;
-}
-
-/* Smooth transitions */
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
 }
 
 /* Custom scrollbar */
@@ -135,14 +179,26 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1eeee;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #8ba3c7;
+  background: #faf6f2;
   border-radius: 4px;
 }
 
+::-webkit-scrollbar-thumb {
+  background: #747895;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #7a92b6;
+  background: #8589a3;
+}
+
+@layer components {
+  .meditation-card {
+    @apply p-6 bg-[#ecedf5] rounded-lg border border-[#747895]/20;
+  }
+
+  .meditation-border {
+    @apply border border-[#747895]/20;
+  }
 }

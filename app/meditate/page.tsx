@@ -9,7 +9,7 @@ import { Timer } from "@/components/timer"
 // Add a type declaration for the global function
 declare global {
   interface Window {
-    playChime?: () => Promise<void>
+    playBirdsong?: () => Promise<void>
   }
 }
 
@@ -25,10 +25,10 @@ export default function MeditatePage() {
   const handleTimerComplete = () => {
     setIsTimerComplete(true)
 
-    // Play the chime using the global function
-    if (typeof window !== "undefined" && window.playChime) {
-      window.playChime().catch((err) => {
-        console.log("Error playing chime in meditate page:", err)
+    // Play the birdsong using the global function
+    if (typeof window !== "undefined" && window.playBirdsong) {
+      window.playBirdsong().catch((err) => {
+        console.log("Error playing birdsong in meditate page:", err)
       })
     }
   }
@@ -38,21 +38,21 @@ export default function MeditatePage() {
   }
 
   return (
-    <div className="container max-w-md mx-auto py-12 px-4 bg-white text-[#411f30] min-h-screen">
-      <Card className="p-6 bg-[#ecedf5] shadow-lg rounded-lg border border-[#411f30]">
-        <div className="space-y-6 text-center">
-          <h1 className="text-2xl font-bold text-[#411f30]">Meditation</h1>
+    <div className={`container max-w-2xl mx-auto py-12 px-4 min-h-screen ${isTimerComplete ? 'meditation-complete' : 'bg-gradient-to-b from-[#faf6f2] to-white'}`}>
+      <Card className="meditation-card fade-in">
+        <div className="space-y-8 text-center">
+          <h1 className="text-3xl font-light mb-6 text-[#747895]">Meditate</h1>
 
-          <div className="p-6 bg-white rounded-lg border border-[#411f30]">
-            <p className="text-lg italic text-[#411f30]">{sentence}</p>
+          <div className="p-8 bg-white/50 backdrop-blur-sm rounded-xl border border-[#747895]/10 float-subtle">
+            <p className="text-xl italic text-[#747895]">{sentence}</p>
           </div>
 
           {!isTimerRunning && !isTimerComplete && (
-            <div className="space-y-4">
-              <p className="text-[#411f30]">When you're ready, press the button below to begin your 3-minute meditation on this sentence.</p>
+            <div className="space-y-6 slide-up">
+              <p className="text-lg text-[#747895]/80">When you're ready, press the button below to begin your 3-minute meditation on this sentence.</p>
               <Button 
                 onClick={() => setIsTimerRunning(true)}
-                className="bg-[#411f30] text-[#fdf0e5] hover:bg-[#5a2b42] transition-colors duration-300"
+                className="meditation-button"
               >
                 Begin Meditation
               </Button>
@@ -60,20 +60,19 @@ export default function MeditatePage() {
           )}
 
           {isTimerRunning && !isTimerComplete && (
-            <div className="space-y-4">
-              <p className="text-[#411f30]">Meditate on the sentence above...</p>
+            <div className="space-y-6 fade-in">
               <Timer duration={3 * 60} onComplete={handleTimerComplete} className="mx-auto" />
             </div>
           )}
 
           {isTimerComplete && (
-            <div className="space-y-4">
-              <p className="text-[#411f30]">Your meditation is complete.</p>
+            <div className="space-y-6 fade-in">
+              <p className="text-lg text-[#747895]/80">Your meditation is complete.</p>
               <Button 
                 onClick={handleContinue}
-                className="bg-[#411f30] text-[#fdf0e5] hover:bg-[#5a2b42] transition-colors duration-300"
+                className="meditation-button"
               >
-                Continue to Free Writing
+                Continue to Free Write
               </Button>
             </div>
           )}
