@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -22,6 +22,20 @@ export default function MeditatePage() {
   const [isTimerRunning, setIsTimerRunning] = useState(false)
   const [isTimerComplete, setIsTimerComplete] = useState(false)
 
+  // Add this audioRef and useEffect for iPhone audio unlock
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/birdsong.mp3")
+    }
+    window.playBirdsong = async () => {
+      if (audioRef.current) {
+        await audioRef.current.play()
+      }
+    }
+  }, [])
+
   const handleTimerComplete = () => {
     setIsTimerComplete(true)
 
@@ -31,6 +45,17 @@ export default function MeditatePage() {
         console.log("Error playing birdsong in meditate page:", err)
       })
     }
+  }
+
+  // Unlock audio for iOS and start timer
+  const handleStartMeditation = () => {
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        audioRef.current!.pause()
+        audioRef.current!.currentTime = 0
+      })
+    }
+    setIsTimerRunning(true)
   }
 
   const handleContinue = () => {
@@ -51,7 +76,7 @@ export default function MeditatePage() {
             <div className="space-y-6 slide-up">
               <p className="text-lg text-[#747895]/80">When you're ready, press the button below to begin your 3-minute meditation on this sentence.</p>
               <Button 
-                onClick={() => setIsTimerRunning(true)}
+                onClick={handleStartMeditation}
                 className="meditation-button"
               >
                 Begin Meditation
