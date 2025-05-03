@@ -1,7 +1,6 @@
-
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -35,6 +34,20 @@ export default function ReflectPage() {
   const [isComplete, setIsComplete] = useState(false)
   const { toast } = useToast()
 
+  // Add this audioRef and useEffect for iPhone audio unlock
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/birdsong.mp3")
+    }
+    window.playBirdsong = async () => {
+      if (audioRef.current) {
+        await audioRef.current.play()
+      }
+    }
+  }, [])
+
   const handleStartTimer = () => {
     // Unlock audio for iOS by playing and pausing the audio
     if (audioRef.current) {
@@ -45,6 +58,10 @@ export default function ReflectPage() {
     }
     setTimerStarted(true)
   }
+
+  const handleTimerComplete = () => {
+    setTimerComplete(true)
+    setShowExpansion(true)
 
     // Play the birdsong using the global function
     if (typeof window !== "undefined" && window.playBirdsong) {
