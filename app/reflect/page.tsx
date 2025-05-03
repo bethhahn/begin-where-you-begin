@@ -1,3 +1,5 @@
+
+
 "use client"
 
 import { useState } from "react"
@@ -35,12 +37,15 @@ export default function ReflectPage() {
   const { toast } = useToast()
 
   const handleStartTimer = () => {
+    // Unlock audio for iOS by playing and pausing the audio
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        audioRef.current!.pause()
+        audioRef.current!.currentTime = 0
+      })
+    }
     setTimerStarted(true)
   }
-
-  const handleTimerComplete = () => {
-    setTimerComplete(true)
-    setShowExpansion(true)
 
     // Play the birdsong using the global function
     if (typeof window !== "undefined" && window.playBirdsong) {
