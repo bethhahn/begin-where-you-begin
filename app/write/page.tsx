@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -27,6 +27,20 @@ export default function WritePage() {
   const { toast } = useToast()
   const router = useRouter()
 
+  // Add this audioRef and useEffect for iPhone audio unlock
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/birdsong.mp3")
+    }
+    window.playBirdsong = async () => {
+      if (audioRef.current) {
+        await audioRef.current.play()
+      }
+    }
+  }, [])
+
   const handleTimerComplete = () => {
     setIsTimerComplete(true)
 
@@ -44,7 +58,14 @@ export default function WritePage() {
     }
   }
 
+  // Unlock audio for iOS in handleStartWriting
   const handleStartWriting = () => {
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        audioRef.current!.pause()
+        audioRef.current!.currentTime = 0
+      })
+    }
     setIsTimerRunning(true)
     // Focus the textarea when the timer starts
     setTimeout(() => {
